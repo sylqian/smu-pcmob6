@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, UIManager, ActivityIndicator, Keyboard } from 'react-native';
-import { API, API_LOGIN } from '../constants/API';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, UIManager, ActivityIndicator, Keyboard, LayoutAnimation } from 'react-native';
+import { API, API_LOGIN, API_SIGNUP } from '../constants/API';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -11,11 +11,12 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 export default function SignInSignUpScreen({ navigation }) {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorText, setErrorText] = useState('');
+  const [errorText, setErrorText] = useState("");
   const [isLogIn, setIsLogIn] = useState(true);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   async function login() {
     console.log("---- Login time ----");
@@ -41,6 +42,34 @@ export default function SignInSignUpScreen({ navigation }) {
       setErrorText(error.response.data.description);
       if (error.response.status = 404) {
         setErrorText("User does not exist")
+      }
+    }
+  }
+
+  async function signUp() {
+    if (password != confirmPassword) {
+      setErrorText("Your passwords don't match. Check and try again.")
+    } else {
+      try {
+        setLoading(true);
+        const response = await axios.post(API + API_SIGNUP, {
+          username,
+          password,
+        });
+        if (response.data.Error) {
+          // We have an error message for if the user already exists
+          setErrorText(response.data.Error);
+          setLoading(false);
+        } else {
+          console.log("Success signing up!");
+          setLoading(false);
+          login();
+        }
+      } catch (error) {
+        setLoading(false);
+        console.log("Error logging in!");
+        console.log(error.response);
+        setErrorText(error.response.data.description);
       }
     }
   }
@@ -83,7 +112,7 @@ export default function SignInSignUpScreen({ navigation }) {
       <View/>
       <View>
         <View style={{flexDirection: "row"}}>
-          <TouchableOpacity style={styles.button} onPress={login}>
+          <TouchableOpacity style={styles.button} onPress={ isLogIn ? login : signUp}>
             <Text style={styles.buttonText}> {isLogIn ? "Log In" : "Sign Up"} </Text>
           </TouchableOpacity>
           {loading ? <ActivityIndicator style={{ marginLeft: 10 }}/> : <View/>}
@@ -94,6 +123,11 @@ export default function SignInSignUpScreen({ navigation }) {
       </Text>
       <TouchableOpacity
         onPress={() => {
+          LayoutAnimation.configureNext({
+            duration: 700,
+            create: { type: 'linear', property: 'opacity' },
+            update: { type: 'spring', springDamping: 0.6 }
+          });
           setIsLogIn(!isLogIn);
           setErrorText("");
         }}>
