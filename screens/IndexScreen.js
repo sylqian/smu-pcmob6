@@ -5,6 +5,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API, API_POSTS } from "../constants/API";
 import { lightStyles } from "../styles/commonStyles";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function IndexScreen({ navigation, route }) {
 
@@ -24,7 +25,14 @@ export default function IndexScreen({ navigation, route }) {
   });
 
   useEffect(() => {
+    console.log("Setting up nav listener");
+    // Check for when we come back to this screen
+    const removeListener = navigation.addListener("focus", () => {
+      console.log("Running nav listener");
+      getPosts();
+    });
     getPosts();
+    return removeListener;
   }, []);
 
   async function getPosts() {
@@ -44,7 +52,7 @@ export default function IndexScreen({ navigation, route }) {
     }
   }
 
-  function onRefresh() {
+  async function onRefresh() {
     setRefreshing(true)
     const response = await getPosts();
     setRefreshing(false)
@@ -61,7 +69,7 @@ export default function IndexScreen({ navigation, route }) {
   // The function to render each row in our FlatList
   function renderItem({ item }) {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate("Details", {post: item})}>
+      <TouchableOpacity onPress={() => navigation.navigate("Details", {id: item.id})}>
         <View
           style={{
             padding: 10,
