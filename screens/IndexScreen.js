@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, TouchableOpacity, FlatList } from "react-native";
+import { Text, View, TouchableOpacity, FlatList, RefreshControl } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,6 +9,7 @@ import { lightStyles } from "../styles/commonStyles";
 export default function IndexScreen({ navigation, route }) {
 
   const [posts, setPosts] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
   const styles = lightStyles;
 
   // This is to set up the top right button
@@ -41,6 +42,12 @@ export default function IndexScreen({ navigation, route }) {
         navigation.navigate("SignInSignUp");
       }
     }
+  }
+
+  function onRefresh() {
+    setRefreshing(true)
+    const response = await getPosts();
+    setRefreshing(false)
   }
 
   function addPost() {
@@ -81,6 +88,12 @@ export default function IndexScreen({ navigation, route }) {
         renderItem={renderItem}
         style={{ width: "100%" }}
         keyExtractor={(item) => item.id.toString()}
+        refreshControl={
+          <RefreshControl
+          refreshing={refreshing}
+          colors={["9Bd35A", "#689F38"]}
+          />
+        }
       />
     </View>
   );
