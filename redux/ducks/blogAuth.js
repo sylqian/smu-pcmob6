@@ -3,11 +3,11 @@ import { ActionSheetIOS } from "react-native";
 export const LOG_IN = 'log_in';
 export const LOG_OUT = 'log_out';
 
-export function LogInAction(){
+export function logInAction(){
     return {type: LOG_IN}
 }
 
-export function LogOutAction(){
+export function logOutAction(){
     return {type: LOG_OUT}
 }
 
@@ -25,10 +25,10 @@ export default function blogAuthReducer(state = initialState, action) {
 
         // action = {payload: "access_token"}
         // action.payload returns access_token
-            return {...State, token: action.payload};
+            return {...state, token: action.payload};
         // since we have token: action.payload, this will override ...state which returns (token: null)
         case LOG_OUT: 
-            return {...State, token: null};
+            return {...state, token: null};
     default: // else
         return state;
     }
