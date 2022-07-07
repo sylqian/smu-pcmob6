@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { lightStyles, commonStyles } from "../styles/commonStyles";
+import { lightStyles, darkStyles, commonStyles } from "../styles/commonStyles";
 import axios from "axios";
 import { API, API_CREATE } from "../constants/API";
 import { useSelector } from "react-redux";
 
 export default function CreateScreen({ navigation }) {
   const token = useSelector((state) => state.auth.token);
-  const styles = { ...lightStyles, ...commonStyles };
+  const isDark = useSelector((state) => state.accountPrefs.isDark);
+  const styles = { ...commonStyles, ...(isDark ? darkStyles : lightStyles) };
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
