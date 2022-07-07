@@ -3,11 +3,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BlogStack from '../components/BlogStack';
 import AccountStack from '../components/AccountStack';
 import { FontAwesome } from '@expo/vector-icons'; 
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
 export default function LoggedInStack() {
-  
+const isDark = useSelector((state) => state.accountPrefs.isDark);
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -26,8 +28,8 @@ export default function LoggedInStack() {
       tabBarOptions={{
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
-        style: {
-          backgroundColor: "white",
+        tabStyle: {
+          backgroundColor: isDark ? "#181818" : "white",
         }
       }}>
         <Tab.Screen name="Blog" component={BlogStack} />
