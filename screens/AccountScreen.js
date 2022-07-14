@@ -69,17 +69,17 @@ export default function AccountScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { alignItems: "center" }]}>
-      <Text style={[styles.title, styles.text, { marginTop: 30 }]}>
+      <Text style={[styles.title, styles.text, { marginTop: 38 }]}>
         {" "}
-        Hello {username} !
+        {username}
       </Text>
       <Image source={{ uri: profilePicture }} 
-      style={{ width: 250, height: 250, borderRadius: 200 }}/>
+      style={{ width: 220, height: 220, borderRadius: 200 }}/>
       
       <TouchableOpacity onPress={() => navigation.navigate("Camera")}>
-        <Text style={{ marginTop: 10, fontSize: 20, color: "#0000EE" }}>
+        <Text style={{ marginTop: 30, fontSize: 18, color: "black" }}>
           {" "}
-          No profile picture. Click to take one.{" "}
+          Upload profile picture here{" "}
         </Text>
       </TouchableOpacity>
       <View
@@ -87,7 +87,7 @@ export default function AccountScreen({ navigation }) {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          margin: 20,
+          margin: 30,
         }}
       >
         <Text style={[styles.content, styles.text]}> Dark Mode? </Text>

@@ -16,7 +16,7 @@ const isDark = useSelector((state) => state.accountPrefs.isDark);
         tabBarIcon: ({ color, size }) => {
           let iconName;
 
-          if (route.name === 'Blog') {
+          if (route.name === 'My Journals') {
             iconName = "comments"
           } else if (route.name === 'Settings') {
             iconName = "cog"
@@ -32,7 +32,7 @@ const isDark = useSelector((state) => state.accountPrefs.isDark);
           backgroundColor: isDark ? "#181818" : "white",
         }
       }}>
-        <Tab.Screen name="Blog" component={BlogStack} />
+        <Tab.Screen name="My Journals" component={BlogStack} />
         <Tab.Screen name="Settings" component={AccountStack} />
       </Tab.Navigator>
   )

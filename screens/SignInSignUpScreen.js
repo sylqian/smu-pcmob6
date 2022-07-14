@@ -148,7 +148,7 @@ export default function SignInSignUpScreen({ navigation }) {
       >	
         <Text style={styles.switchText}>	
           {isLogIn	
-            ? "No account? Sign up now."	
+            ? "No account yet? Sign up now."	
             : "Already have an account? Log in here."}	
         </Text>	
       </TouchableOpacity>	
@@ -158,22 +158,22 @@ export default function SignInSignUpScreen({ navigation }) {
 const styles = StyleSheet.create({	
   container: {	
     flex: 1,	
-    backgroundColor: "#fff",	
+    backgroundColor: "#F8E3E3",	
     alignItems: "center",	
     justifyContent: "center",	
   },	
   title: {	
     fontWeight: "bold",	
-    fontSize: 40,	
-    margin: 20,	
+    fontSize: 32,	
+    margin: 50,	
   },	
   switchText: {	
     fontWeight: "400",	
     fontSize: 20,	
-    marginTop: 20,	
+    marginTop: 30,	
   },	
   inputView: {	
-    backgroundColor: "#FFC0CB",	
+    backgroundColor: "white",	
     borderRadius: 30,	
     width: "70%",	
     height: 45,	
@@ -186,13 +186,14 @@ const styles = StyleSheet.create({
     padding: 10,	
   },	
   button: {	
-    backgroundColor: "blue",	
-    borderRadius: 25,	
+    backgroundColor: "#E26A37",	
+    borderRadius: 20,	
+    marginTop: 40,
   },	
   buttonText: {	
     fontWeight: "400",	
     fontSize: 20,	
-    margin: 20,	
+    margin: 18,	
     color: "white",	
   },	
   errorText: {	
