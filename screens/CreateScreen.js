@@ -44,9 +44,11 @@ export default function CreateScreen({ navigation }) {
           Enter Note
         </Text>
         <TextInput
-          style={additionalStyles.input}
+          style={[additionalStyles.input, {height: 200}]}
           value={content}
           onChangeText={(text) => setContent(text)}
+          multiline={true}
+          
         />
         <TouchableOpacity
           style={[styles.button, { marginTop: 20 }]}
